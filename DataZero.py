@@ -30,10 +30,6 @@ def url_check(input_url):
 
     robots_url = str(f"{scheme}://{netloc}/robots.txt")
 
-    #print(robots_url)
-    #print(path)
-    #print(scheme)
-    #print(netloc)
     
     # Using urllib's request; get that robot.txt.
 
