@@ -51,6 +51,8 @@ def url_check(input_url):
         print("Green")
 
     return url, netloc
+
+# Scraper Function - More details to come.
     
 def url_scrape(a, b):
 
