@@ -52,8 +52,6 @@ def url_check(input_url):
 
     return url, netloc
     
-    
-# Scraping Function
 def url_scrape(a, b):
 
     url = a
