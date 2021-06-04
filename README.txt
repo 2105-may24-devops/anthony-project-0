@@ -7,6 +7,7 @@ MVPs - Minimum Viable Product
 	- looks for tabular data on given site
 	- downloads it into csv, and/or excel files
 	- file browser
+	- GUI simple
 
 NTHs - Nice to haves
 	- GUI
