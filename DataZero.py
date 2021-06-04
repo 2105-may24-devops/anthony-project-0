@@ -82,6 +82,9 @@ def url_scrape(a, b):
         df.loc[length] = row_data
 
     print("Scraping successful!")
+
+    # Saving the file
+
     download = input("Would you like to download this data? y/n ")
 
     if download == 'y':
@@ -90,7 +93,7 @@ def url_scrape(a, b):
         df.to_csv(f"{netloc}_{timestr}")
         print('Save successful!')
     else:
-        "Here's a snapshot, then."
+        print("Here's a snapshot, then.")
         print(df)
 
 
@@ -98,10 +101,10 @@ def url_scrape(a, b):
 if __name__=="__main__":
 
     print("Welcome to Data Zero!\n")
-    url_checked, netloc_checked = url_check(input_url=input("Input a url: "))
+    url_checked, netloc_checked = url_check(input_url=input("Input a url: \n"))
 
-    print("Scrape this page?")
-    answer = input('y/n')
+    print("Scrape this page?\n")
+    answer = input('y/n\n')
 
     if answer == 'y':
         url_scrape(url_checked, netloc_checked)
