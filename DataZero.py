@@ -13,7 +13,6 @@ from urllib.parse import urlparse
 import urllib.request
 
 # Permission Check Function
-
 def url_check(input_url):
     
     # Get input URL string. Urlparse chunks the address into Scheme, Netloc, Path, Params, Query, Fragment.
@@ -29,22 +28,15 @@ def url_check(input_url):
     # for scraping the data on their page.
 
     robots_url = str(f"{scheme}://{netloc}/robots.txt")
-
-    #print(robots_url)
-    #print(path)
-    #print(scheme)
-    #print(netloc)
     
     # Using urllib's request; get that robot.txt.
 
     robots_file = urllib.request.urlopen(robots_url)
-    #print(robots_file)
       
     # Decode the requested file and store it.
 
     for line in robots_file:
         decoded_file = line.decode("utf-8")
-        #print(decoded_file)
 
     # Check for Permissions for the path we're going to scrape.  
     # Currently (Red = Path Not Allowed, Green = Path Allowed)
@@ -60,8 +52,8 @@ def url_check(input_url):
 
     return url, netloc
     
-    # Scraping Function
-
+    
+# Scraping Function
 def url_scrape(a, b):
 
     url = a
