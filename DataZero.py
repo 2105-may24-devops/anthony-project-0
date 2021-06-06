@@ -11,6 +11,8 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import urllib.request
+import time
+from pathlib import Path
 
 # Permission Check Function
 def url_check(input_url):
@@ -23,6 +25,7 @@ def url_check(input_url):
     scheme = str(parsed_url.scheme)
     netloc = str(parsed_url.netloc)
     path = str(parsed_url.path)
+    risk_level = 0;
 
     # Ammend file with 'robots.txt'. This is a file--most websites have--that list User-Agent permissions
     # for scraping the data on their page.
@@ -46,11 +49,21 @@ def url_check(input_url):
 
     # Give the user a level of Risk.    
     if permission_str in decoded_file:
-        print("Red") 
-    else:
-        print("Green")
+         
+        risk_level = 'Red'
+        print(risk_level)
 
-    return url, netloc
+    elif robots_file == 0:
+
+        risk_level('Yellow')
+        print(risk_level)
+
+    else:
+        
+        risk_level = 'Green'
+        print(risk_level)
+
+    return url, netloc, risk_level
 
 # Scraper Function - More details to come.
     
@@ -58,53 +71,103 @@ def url_scrape(a, b):
 
     url = a
     netloc = b
+    scraped = True
+    saved = False
 
     netloc.replace('.', '-')
     page = requests.get(url)
-    soup = BeautifulSoup(page.text)
+    soup = BeautifulSoup(page.text, features='lxml')
 
     # Get the table.
+    try:
+        table = soup.find('table')
 
-    table = soup.find('table')
+        headers = []
 
-    headers = []
+        for i in table.find_all('th'):
+            title = i.text.strip()
+            headers.append(title)
 
-    for i in table.find_all('th'):
-        title = i.text.strip()
-        headers.append(title)
+        df = pd.DataFrame(columns = headers)
 
-    df = pd.DataFrame(columns = headers)
+        for row in table.find_all('tr')[1:]:
+            data = row.find_all('td')
+            row_data = [td.text.strip() for td in data]
+            length = len(df)
+            df.loc[length] = row_data
 
-    for row in table.find_all('tr')[1:]:
-        data = row.find_all('td')
-        row_data = [td.text.strip() for td in data]
-        length = len(df)
-        df.loc[length] = row_data
+        print("Scraping successful!")
+    
+        # Saving the file
 
-    print("Scraping successful!")
+        download = input("Would you like to download this data? y/n ")
 
-    # Saving the file
+        if download == 'y':
+            
+            timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
+            df.to_csv(f"{netloc}_{timestr}")
+            print('Save successful!')
+            saved = True
+        else:
+            print("Here's a snapshot, then.")
+            print(df)
+            saved = False
+    except:
+        print("No tabular data found.")
 
-    download = input("Would you like to download this data? y/n ")
+    return scraped, saved
 
-    if download == 'y':
-        import time
-        timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
-        df.to_csv(f"{netloc}_{timestr}")
-        print('Save successful!')
-    else:
-        print("Here's a snapshot, then.")
-        print(df)
+# call history function
 
+def history(history):
+    
+	from csv import writer
+
+
+	# Takes the last scraped url into the function for logging.
+	# It should record the name of the site, the time, and whether or not the user saved or viewed the data.
+
+	log_data = history
+	log_data.append(time.strftime("%d-%m-%Y_%H:%M:%S"))
+
+	# Opens data-histroy.csv, if it doesn't exist creates it.
+	
+	with open('data-history.csv', 'a+') as f_object:
+
+		writer_object = writer(f_object)
+
+		writer_object.writerow(log_data)
+
+		f_object.close()
 
 # Enter the program
 if __name__=="__main__":
 
+    # Declare a list to store data for logging purposes.
+
+    history_data = []
+
+    # Greeting, future UI stuff?
     print("Welcome to Data Zero!\n")
-    url_checked, netloc_checked = url_check(input_url=input("Input a url: \n"))
+
+    # Call the url permissions check.
+    url_checked, netloc_checked, risk_level = url_check(input_url=input("Input a url: \n"))
+
+    history_data.append(str(url_checked))
+    history_data.append(str(risk_level))
+
+    # Ask the user whether or not they want to scrape. Note: A Red risk-level will not prevent a user from scraping a page
+    # it only lets them know whether or not it's allowed. The risk belongs to the user.
 
     print("Scrape this page?\n")
     answer = input('y/n\n')
 
+
     if answer == 'y':
-        url_scrape(url_checked, netloc_checked)
+        url_scraped, url_saved = url_scrape(url_checked, netloc_checked)
+
+
+    history_data.append(str(url_scraped))
+    history_data.append(str(url_saved))
+    history(history_data)
+    
