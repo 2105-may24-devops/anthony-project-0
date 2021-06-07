@@ -152,7 +152,7 @@ def rapid_scraper(input):
 
     # Get the table.
     try:
-        table = soup.find('table')gi
+        table = soup.find('table')
 
         headers = []
 
