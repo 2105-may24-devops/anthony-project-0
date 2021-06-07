@@ -140,4 +140,42 @@ def history(history):
 
 		f_object.close()
 
+# Rescraper Function
+
+def rapid_scraper(input):
+    import os
+
+    url = input
+
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, features='html')
+
+    # Get the table.
+    try:
+        table = soup.find('table')gi
+
+        headers = []
+
+        for i in table.find_all('th'):
+            title = i.text.strip()
+            headers.append(title)
+
+        df = pd.DataFrame(columns = headers)
+
+        for row in table.find_all('tr')[1:]:
+            data = row.find_all('td')
+            row_data = [td.text.strip() for td in data]
+            length = len(df)
+            df.loc[length] = row_data
+
+        os.system("echo Scraping Successful!")
+    
+        # Saving the file
+            
+        timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
+        df.to_csv(f"rapid-scrape_{timestr}")
+        print('Save successful!')
+        saved = True
+    except:
+        os.system("echo No tabular data found!")
     
