@@ -63,14 +63,15 @@ def url_check(input_url):
         risk_level = 'Green'
         print(risk_level)
 
-    return url, netloc, risk_level
+    return url, netloc, risk_level, path
 
 # Scraper Function - More details to come.
     
-def url_scrape(a, b):
+def url_scrape(a, b, c):
 
     url = a
     netloc = b
+    path = c
     scraped = True
     saved = False
 
@@ -98,14 +99,19 @@ def url_scrape(a, b):
 
         print("Scraping successful!")
     
-        # Saving the file
+        # Saving file and creating subfolders.
 
         download = input("Would you like to download this data? y/n ")
 
         if download == 'y':
+
+            #Create folder, using the netloc as a name.
+            path = Path(f"./saved_data/{netloc}/{path}")
+            path.mkdir(parents=True, exist_ok=True)
             
+            # Save File
             timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
-            df.to_csv(f"{netloc}_{timestr}")
+            df.to_csv(f"{path}/{netloc}_{timestr}")
             print('Save successful!')
             saved = True
         else:
