@@ -149,16 +149,20 @@ def history(history):
 # Rescraper Function
 
 def rapid_scraper(input):
-    import os
 
     url = input
+
+    parsed_url = urlparse(url)
+    scheme = str(parsed_url.scheme)
+    netloc = str(parsed_url.netloc)
+    path = str(parsed_url.path)
 
     page = requests.get(url)
     soup = BeautifulSoup(page.text, features='html')
 
     # Get the table.
     try:
-        table = soup.find('table') 
+        table = soup.find('table')
 
         headers = []
 
@@ -174,14 +178,19 @@ def rapid_scraper(input):
             length = len(df)
             df.loc[length] = row_data
 
-        os.system("echo Scraping Successful!")
+        print("Scraping Successful!")
     
+        #Create folder, using the netloc as a name.
+        path = Path(f"./saved_data/{netloc}/{path}")
+        path.mkdir(parents=True, exist_ok=True)
+
         # Saving the file
             
         timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
         df.to_csv(f"rapid-scrape_{timestr}")
         print('Save successful!')
         saved = True
+
     except:
-        os.system("echo No tabular data found!")
+        print("No tabular data found!")
     
