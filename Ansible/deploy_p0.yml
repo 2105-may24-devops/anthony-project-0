@@ -17,22 +17,23 @@
       ansible.builtin.package:
         name: git
         state: latest
-    - name: Install pip
+    - name: Ensure pip is installed on hosts
       ansible.builtin.package:
-        name: pip
+        name: python-setuptools
         state: latest
+        
      
-
 # Deploy Project 0
 - name: Deploy Project 0
   hosts: virtuals
   become: yes
   tasks:
-  - name: "clone or git pull"
+  - name: Clone/Update
     git:
       repo: https://github.com/2105-may24-devops/anthony-project-0.git
-      dest: /home/anthony-project-0
+      dest: /home/anthony/anthony-project-0
+      clone: yes
       update: yes
   - name: Install dependencies
     pip:
-      requirements: ~/anthony-project-0/requirements.txt
+      requirements: //anthony-project-0/requirements.txt
