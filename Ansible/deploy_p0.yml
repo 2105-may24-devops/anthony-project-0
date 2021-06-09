@@ -1,0 +1,38 @@
+---
+  # This play deploys the project to the virtual hosts.
+  
+- name: Install Python3, pip
+  hosts: virtuals
+  become: yes
+  tasks:
+    - name: install python3
+      ansible.builtin.package:
+        name: python3
+        state: latest
+    - name: install python3-venv
+      ansible.builtin.package:
+        name: python3-venv
+        state: latest
+    - name: install git
+      ansible.builtin.package:
+        name: git
+        state: latest
+    - name: Install pip
+      ansible.builtin.package:
+        name: pip
+        state: latest
+     
+
+# Deploy Project 0
+- name: Deploy Project 0
+  hosts: virtuals
+  become: yes
+  tasks:
+  - name: "clone or git pull"
+    git:
+      repo: https://github.com/2105-may24-devops/anthony-project-0.git
+      dest: /home/anthony-project-0
+      update: yes
+  - name: Install dependencies
+    pip:
+      requirements: ~/anthony-project-0/requirements.txt
