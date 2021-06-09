@@ -51,18 +51,20 @@ def url_check(input_url):
     if permission_str in decoded_file:
          
         risk_level = 'Red'
-        print(risk_level)
-
-    elif robots_file == 0:
-
-        risk_level('Yellow')
-        print(risk_level)
-
-    else:
+        print("\n")
+        print(f"Your risk level is {risk_level}! This site would prefer to keep the data to themselves.")
         
+    elif robots_file == 0:
+        risk_level ='Yellow'
+        print("\n")
+        print(f"Your risk level is {risk_level}! This site has no permissions to speak of...")
+        
+    else:
         risk_level = 'Green'
-        print(risk_level)
-
+        print("\n")
+        print(f"Your risk level is {risk_level}! Free numbers!")
+    
+    
     return url, netloc, risk_level, path
 
 # Scraper Function - More details to come.
@@ -97,11 +99,11 @@ def url_scrape(a, b, c):
             length = len(df)
             df.loc[length] = row_data
 
-        print("Scraping successful!")
+        print("!!!!   Scraping successful  !!!!\n\n")
     
         # Saving file and creating subfolders.
-
-        download = input("Would you like to download this data? y/n ")
+        print("Would you like to save this data?")
+        download = input("Yes (y) or No (n)\n\n")
 
         if download == 'y':
 
@@ -112,14 +114,14 @@ def url_scrape(a, b, c):
             # Save File
             timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
             df.to_csv(f"{path}/{netloc}_{timestr}")
-            print('Save successful!')
+            print('!!!!    Save successful    !!!!\n\n')
             saved = True
         else:
-            print("Here's a snapshot, then.")
+            print("....    Here's a snapshot, then    ....\n\n")
             print(df)
             saved = False
     except:
-        print("No tabular data found.")
+        print("No tabular data found. Try a different page!")
 
     return scraped, saved
 
@@ -178,7 +180,7 @@ def rapid_scraper(input):
             length = len(df)
             df.loc[length] = row_data
 
-        print("Scraping Successful!")
+        print("!!!!    Scraping Successful    !!!!")
     
         #Create folder, using the netloc as a name.
         path = Path(f"./saved_data/{netloc}/{path}")
@@ -187,10 +189,10 @@ def rapid_scraper(input):
         # Saving the file
             
         timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
-        df.to_csv(f"rapid-scrape_{timestr}")
-        print('Save successful!')
+        df.to_csv(f"rapidtestscrape")
+        print('!!!!    Save successful    !!!!')
         saved = True
 
     except:
-        print("No tabular data found!")
+        print("!!!!   No tabular data found    !!!!")
     
