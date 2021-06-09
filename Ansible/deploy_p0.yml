@@ -25,7 +25,6 @@
 # Deploy Project 0
 - name: Deploy Project 0
   hosts: virtuals
-  become: yes
   tasks:
   - name: Clone/Update
     git:

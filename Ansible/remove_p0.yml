@@ -1,9 +1,10 @@
 # Remove project from VMs
 ---
 - name: Delete project directory
+  become: yes
   hosts: virtuals
   tasks:
   - name: Delete directory.
     file:
-      path: /home/anthony-project-0/
+      path: /home/anthony/anthony-project-0/
       state: absent
