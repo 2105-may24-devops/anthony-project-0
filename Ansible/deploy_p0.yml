@@ -19,9 +19,11 @@
         state: latest
     - name: Ensure pip is installed on hosts
       ansible.builtin.package:
-        name: python-setuptools
-        state: latest
-        
+        name: python3-pip
+        state: present
+    - name: Setup Environment
+      command:
+        cmd: python3 -m venv /home/anthony/anthony-project-0/        
      
 # Deploy Project 0
 - name: Deploy Project 0
@@ -34,6 +36,5 @@
       dest: /home/anthony/anthony-project-0
       clone: yes
       update: yes
-  - name: Install dependencies
-    pip:
-      requirements: //anthony-project-0/requirements.txt
+  - name: Install dependencies  
+    ansible.builtin.script: ~/anthony-project-0/install-requirements.sh
