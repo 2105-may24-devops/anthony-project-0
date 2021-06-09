@@ -4,7 +4,7 @@
   become: yes
   tasks:
     - name: Run a bash script using the command line interface of the program autoscrap.py
-      script: ./rapid_scrapt_test.sh
+      script: ./rapid_scrape_test.sh
     - name: Check if file was produced.
       ansible.builtin.stat:
         path: /home/anthony-project-0/rapidtestscrape.csv
