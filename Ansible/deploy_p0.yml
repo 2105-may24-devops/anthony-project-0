@@ -30,7 +30,7 @@
   - name: Clone/Update
     git:
       repo: https://github.com/2105-may24-devops/anthony-project-0.git
-      dest: /home/anthony-project-0/
+      dest: /home/anthony/anthony-project-0/
       clone: yes
       update: yes
   - name: Install dependencies  
