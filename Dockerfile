@@ -15,19 +15,26 @@
 # Less layers are generally more performant.
 
 # If I use 3, it will use the image that is the newest. However if I specific 3.9, it will only use 3.9 image.
-WORKDIR /home/anthony-project-0/app
 
-FROM python:3
+
+FROM python:3.9
+
+WORKDIR /app
 
 # COPY requirements.txt /app
-COPY requirements.txt *.py /app/
+COPY requirements.txt .
 
 #set up virtual environment
-RUN python3 -m venv /app/venv
+RUN python3 -m venv venv
 
 #install requirements
 RUN venv/bin/python3 -m pip install -r requirements.txt
 
+COPY . .
+
 # THIS is just metadata on the image - what command will execute to start each container.
-CMD ["python3", "-m", "anthony-project-0"]
+CMD ["venv/bin/python3", "data_zero.py"]
 # can override the CMD with asecond argument to docker un
+
+#make sure to include a .dockerignore to ignore things that might change. Take advantage of the build cache to optimize docker file.
+# Or change the order.
