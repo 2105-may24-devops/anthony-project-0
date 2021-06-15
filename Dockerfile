@@ -1,40 +1,22 @@
+# Standard dockerfile, to take a python project and make an image using requirements, pip, and venv.
 
-#Isolated processes
-# Create container image, aka Docker Image
-# Containers are ephemeral (created and destroyed as needed)
-# images are immutable: templates used to make new containers.
-# To create an image, you build a Dockerfile: Recipes to build an image layer by layer.
-# Docker Host follows the Dockerfile's instruction.
-# Instructions are executed in containers of their own.
-
-# You get images from docker registries. Default is docker hub. docker.io
-# Two things we want from a base images.
-    # 1. As much of the dependencies of our app as possible.
-    # 2. Officially supported/well maintained with updates
-# Instead of using multiple run commands, use '&&' to separate RUN statements to create a singe layer for similar tasks.
-# Less layers are generally more performant.
-
-# If I use 3, it will use the image that is the newest. However if I specific 3.9, it will only use 3.9 image.
-
-
+# The base for the image. Can use python:3, and docker will grab the newest stable release.
 FROM python:3.9
 
+# Hop into this directory, to keep things in on place in the image?.
 WORKDIR /app
 
-# COPY requirements.txt /app
+# Put requirements into the image.
 COPY requirements.txt .
 
-#set up virtual environment
+# Set up a python virtual environment.
 RUN python3 -m venv venv
 
-#install requirements
+# Install requirements.
 RUN venv/bin/python3 -m pip install -r requirements.txt
 
+# Copy the the cwd into the image cwd.
 COPY . .
 
-# THIS is just metadata on the image - what command will execute to start each container.
+# This is the metadata for how to run/create your container.
 CMD ["venv/bin/python3", "data_zero.py"]
-# can override the CMD with asecond argument to docker un
-
-#make sure to include a .dockerignore to ignore things that might change. Take advantage of the build cache to optimize docker file.
-# Or change the order.

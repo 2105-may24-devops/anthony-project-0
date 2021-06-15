@@ -1,0 +1,47 @@
+---
+
+# Docker install Play
+- name: Install Docker, Pull Image from Docker Hub, Create Container.
+  hosts: test-vms
+  become: yes
+  tasks:
+    - name: Install docker and some dependencies
+      apt:
+        name: docker
+
+    - name: install python3
+      ansible.builtin.package:
+        name: python3
+        state: latest
+
+    - name: install git
+      ansible.builtin.package:
+        name: git
+        state: latest
+
+    - name: Ensure pip is installed on hosts
+      ansible.builtin.package:
+        name: python3-pip
+        state: present
+
+    - name: pip docker
+      ansible.builtin.pip:
+        name: docker
+        executable: pip3
+
+# Image Pull
+- name: Docker Image Pull
+  hosts: test-vms
+  tasks:
+    - name: Login
+      community.docker.docker_login:
+        username: iamjarvi
+        password: Rhetoric!985
+        email: anthony.m.jarvis@gmail.com
+    - name: Pull Image
+      community.docker.docker_image:
+        name: iamjarvi/anthony-project-0:1.0
+
+      
+
+
