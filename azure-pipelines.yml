@@ -27,7 +27,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-- stage: Connect SSH
+- stage: Connect
   displayName: Connect SSH
   jobs:
   - job: Connect
