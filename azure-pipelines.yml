@@ -27,6 +27,11 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+- stage: SonarCloud
+  displayName: Static Analysis
+  jobs:
+  - job: Sonar
+    steps:
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'sonar_sconn'
