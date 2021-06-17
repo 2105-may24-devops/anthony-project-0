@@ -13,7 +13,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build Image and Scan
   jobs:
   - job: Build
     displayName: Build
@@ -27,6 +27,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+    
 - stage: Connect
   displayName: Connect SSH
   jobs:
