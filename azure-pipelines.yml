@@ -60,7 +60,7 @@ stages:
     - task: Ansible@0
       inputs:
         ansibleInterface: 'agentMachine'
-        playbookPathOnAgentMachine: './Ansible/depoloy_p0.yml'
+        playbookPathOnAgentMachine: './Ansible/deploy_p0.yml'
         inventoriesAgentMachine: 'file'
         inventoryFileOnAgentMachine: './Ansible/inventory'
 
