@@ -27,7 +27,17 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-    
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'sonar_sconn'
+        organization: '2105-may24-devops'
+        scannerMode: 'MSBuild'
+        projectKey: '2105-may24-devops_anthony-project-0'
+        projectName: 'Anthony Project Zero'
+    - task: SonarCloudAnalyze@1
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
 - stage: Connect
   displayName: Connect SSH
   jobs:
