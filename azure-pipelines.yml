@@ -38,9 +38,11 @@ stages:
         SonarCloud: 'sonar_sconn'
         organization: '2105-may24-devops'
         scannerMode: 'CLI'
-        configMode: 'file'
-        projectKey: '2105-may24-devops_anthony-project-0'
+        configMode: 'manual'
+        cliProjectKey: '2105-may24-devops_anthony-project-0'
         projectName: 'Anthony Project Zero'
+        cliSources: '.'
+
         
     - task: SonarCloudAnalyze@1
     - task: SonarCloudPublish@1
