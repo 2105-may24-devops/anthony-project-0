@@ -39,10 +39,6 @@ A console application for automating the initial stages of a data pipeline, find
 
 ## Getting Started ##
 
-1. The Flashcard microservice requires Kafka in order to achieve eventual consistency.
-    - Kafka, in turn, requires Zookeeper
-2. The Consul service acts as service discovery for Flashcard, Quiz and Gateway, but Consul and Gateway can be replaced by Kubernetes services and ingresses
-3. Each microservice uses an application.properties file to configure its behaviour. The properties can be overwritten using environment variables when running the `.jar` file.
 
 ## Usage ##
 
