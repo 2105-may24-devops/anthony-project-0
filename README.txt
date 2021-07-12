@@ -1,10 +1,10 @@
-# Project 0: Data Zero
+# Project 0: Data Zero #
 
-## Project Description
+## Project Description ##
 
 A console application for automating the initial stages of a data pipeline, finding and storing tabular data. It makes requests to a website provided by its user, checks on User-Agent permissions of that site, then seeks tabular data to parse, download, and format. The program's functional design allows for easily adding or extending features depending on the user's needs. Automated testing, infrastructure, and deployment tools allow for easy integration with other tools to supplement a user's analysis workflow, and in a variety of environments.
 
-## Technologies Used
+## Technologies Used ##
 - Programming
   - Python
   - Bash Scripting
@@ -16,9 +16,9 @@ A console application for automating the initial stages of a data pipeline, find
   - Docker
 
 
-## Features
+## Features ##
 
-### Implemented Features
+### Implemented Features ###
 
 - Checks site for User Agent Permissions
   - Provides user with information from the site's robot.text and advises on the implications of scraping data for that sites.
@@ -30,28 +30,28 @@ A console application for automating the initial stages of a data pipeline, find
   - Organizes saved files, by creating directories and file names, based on the site's hostname, and page scraped.
   - Logs each scrape in separate directory, with useful information for its user.
 
-### Planned Features
+### Planned Features ###
 - Improve Interface
   - Improve readability using the Blessed module.
   - Create and Document CLI commands
   - Expand Command line features and add functions for more robust Data Collection.
   - Create Repeatable, or scheduled scraping of past sites. (i.e. Market data at Open and Close each day)
 
-## Getting Started
+## Getting Started ##
 
 1. The Flashcard microservice requires Kafka in order to achieve eventual consistency.
     - Kafka, in turn, requires Zookeeper
 2. The Consul service acts as service discovery for Flashcard, Quiz and Gateway, but Consul and Gateway can be replaced by Kubernetes services and ingresses
 3. Each microservice uses an application.properties file to configure its behaviour. The properties can be overwritten using environment variables when running the `.jar` file.
 
-## Usage
+## Usage ##
 
 
-## Contributors
+## Contributors ##
 
 Anthony M. Jarvis
 
-## License
+## License ##
 
 Copyright 2021 Anthony M. Jarvis
 
